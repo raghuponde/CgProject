@@ -1,3 +1,5 @@
+CODE FIRST APPROACH
+*********************
 
 step 1 : create and open asp.net core web api project and give some name like ResortAPI 
 
@@ -239,7 +241,8 @@ no need to configure json etc will do later now i want your tables in project an
 
 step 7: add migration and update database 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+DBFIRST APPROACH 
+********************
 Now what they are asking is you have to do the above task using db first apprach of entity framework so here they will give u script file means sql server tables they will give you 
 that .sql script file you have to run in your local database of sql server and then in web api you have to write one command to do reverse engineering of those tables 
 Now another question is that the script file which is given to you whether it will contain identity tables or not mostly identity tables wont be there we have to generate it from our end 
@@ -391,6 +394,6 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 and finally run the migrations it will work so this is the apprach for DBFirst approach okay ..
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
- Now the Next thing is 
+ Now the Next thing is for some project like 
 
  
