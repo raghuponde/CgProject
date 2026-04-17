@@ -1,6 +1,6 @@
 CODE FIRST APPROACH
 *********************
-
+Refer Day 70 folder for this demos 
 step 1 : create and open asp.net core web api project and give some name like ResortAPI 
 
 step 2: Add the following packages in the project 
@@ -395,5 +395,221 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 and finally run the migrations it will work so this is the apprach for DBFirst approach okay ..
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
  Now the Next thing is for some project like 
+ When IdentityUser is also a table in your database (e.g., when you want to store users along with other domain entities like employees, posts, etc.),
+so what  i mean to say is that when u are registering with Authenticcaton contoller then register data will go in Asp.netUsers table of identity and now i am saying that the same table 
+user is also a user in your database who's duty is just not to register and login activity he will have its own columns also which may not be there in Asp.netusers table and at that time what 
+ u will do is you will extend Identity user and these values will go in Asp.netUsers table along with 
+
+ FullName and ImageUrl like that so extra columsn may be added in Asp.netuser table now i am taking one project which i have given as 
+
+  and for that project i will do the same task which i had done for Resort project okay 
+
+  public class ApplicationUser : IdentityUser
+{
+    public string FullName { get; set; }
+    public string? ImageUrl { get; set; }  // Optional: for profile pictures
+}
+
+here I can give any name ApplicationUser or User or anything but it shoudl be meaningful Now again 
+it is your choice in the project  u want to maintain seperate user means no need to extend Identity user okay 
+
+so for this projecct i am going with DFirst Approach now DBfirst wont work for this scenaario okay so tables which are not related to User those you can scafffold it no issue 
+and for other which is acting as User and that is not related in other tables that much scaffold it okay from the script file which they give okay 
+
+so from the document i am taking classes and i am asking chatgpt to give me sql script file for this to run in sprint they will only will give script file 
+but now i am not having so i am doing like this 
+
+
+so i had removed User as it will come from identity okay 
+
+public class Course
+{
+public int CourseID { get; set; } 
+ public string CourseName { get; set; } 
+ public string Description { get; set; } 
+ public string Duration { get; set; }
+ public int Cost { get; set; }
+}
+
+public class Enquiry
+{
+public int EnquiryID { get; set; }
+public DateTime EnquiryDate { get; set; } 
+ public string userId { get; set; }
+public string Title { get; set; }
+ public string Description { get; set; }
+ public string EmailID { get; set; }
+public string EnquiryType { get; set; }
+public string Status { get; set; }
+}
+
+public class Payment
+{
+public int PaymentID {get; set;} 
+ public int CourseId { get; set; } 
+ public string UserName { get; set; }
+ public int TotalAmount {get; set;}
+public string Status { get; set; }
+public DateTime PaymentDate {get; set;}
+public string ModeOfPayment {get; set;}
+}
+
+
+now open visual studio of web api with the name BEC and add Models folder into it 
+
+and add following packages etc 
+
+
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.AspNetCore.Identity.EntityFrameworkCore  
+Microsoft.AspNetCore.Authentication.JwtBearer     
+
+
+--->then in package manager console fire this command 
+
+
+Scaffold-DbContext 'Data Source=LAPTOP-4G8BHPK9\SQLEXPRESS;initial catalog=BEC3;Integrated Security=true;TrustServerCertificate=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context ApplicationDbContext -Force
+
+see now i had not brought the line down okay sigle line u have to paste and then only hello table and ApplicationDbContext will be created so overwrite the class with this as 
+ partial class wnt work for creating identity tables but instead of IdentityUser u have to say User 
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+public class ApplicationDbContext : IdentityDbContext<User>
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
+    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        SeedRoles(modelBuilder);
+    }
+
+    private static void SeedRoles(ModelBuilder builder)
+    {
+        builder.Entity<IdentityRole>().HasData(
+            new IdentityRole
+            {
+                Id = "1",
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = "1"
+            },
+            new IdentityRole
+            {
+                Id = "2",
+                Name = "Customer",
+                NormalizedName = "STUDENT",
+                ConcurrencyStamp = "2"
+            }
+        );
+    }
+}
+so was gettign some error so 
+
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+
+namespace BEC.Models;
+
+public  class User:IdentityUser
+{
+   
+
+    public string UserRole { get; set; } = null!;
+
+    public virtual ICollection<Enquiry> Enquiries { get; set; } = new List<Enquiry>();
+
+    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+}
+
+so this column userrole u can see in Asp.netUser Table okay .
 
  
+and now no errors as User is inheritng 
+
+so my class is now like this 
+
+ using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using BEC.Models;
+
+namespace BEC.Models;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+public class ApplicationDbContext : IdentityDbContext <User>
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        SeedRoles(modelBuilder);
+    }
+
+    private static void SeedRoles(ModelBuilder builder)
+    {
+        builder.Entity<IdentityRole>().HasData(
+            new IdentityRole
+            {
+                Id = "1",
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = "1"
+            },
+            new IdentityRole
+            {
+                Id = "2",
+                Name = "Customer",
+                NormalizedName = "STUDENT",
+                ConcurrencyStamp = "2"
+            }
+        );
+    }
+}
+
+
+finall now do app setting also 
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;Initial Catalog=BEC;Integrated Security=True;TrustServerCertificate=True;"
+  }
+}
+
+and progam.cs also 
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+and finally run the migrations now 
+
+but the tables are not generated identtity so now what i will do is i will remove partial for all classes now and will run the migration okay 
+
+so refer Day70 BEC project for this okay 
+
