@@ -240,5 +240,9 @@ namespace ResortAPI.Data
     
 }
 
+Step 6 : Register in Program .cs 
 
-  
+     
+            builder.Services.AddDbContext<ApplicationDbContext>
+(options => options.UseSqlServer(builder.Configuration.GetConnectionString("constring")));
+
