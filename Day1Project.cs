@@ -64,7 +64,7 @@ give your url of web api here issuer and audience is same becasue we have not ye
 
 step 4 : 
 --------
- Now go to Models folder and what and all classes are given in project add those in Models fodler except AppDbContext class which has be added in Data 
+ add  Models folder and what and all classes are given in project add those in Models fodler except AppDbContext class which has be added in Data 
  fodler 
  
 
