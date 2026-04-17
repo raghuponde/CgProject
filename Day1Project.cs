@@ -255,7 +255,8 @@ Microsoft.EntityFrameworkCore.Tools
 Microsoft.AspNetCore.Identity.EntityFrameworkCore  
 Microsoft.AspNetCore.Authentication.JwtBearer     
 
-Go to sql server create new  database resortdb2 and add one sample table create table hello (id int primary key ) and i am doing this just to check 
+Go to sql server create new  database resortdb2 and add one sample table create table hello (id int primary key ) and i am doing this because they have told they will give script file so 
+as per script file gvining db name and also one dummy table for chekcing 
 
 so add these packages again 
 
