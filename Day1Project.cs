@@ -246,3 +246,8 @@ Step 6 : Register in Program .cs
             builder.Services.AddDbContext<ApplicationDbContext>
 (options => options.UseSqlServer(builder.Configuration.GetConnectionString("constring")));
 
+no need to configure json etc will do later now i want your tables in project and also identity 8 tables with the project tables 
+
+
+step 7: add migration and update database 
+
