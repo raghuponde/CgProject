@@ -30,3 +30,36 @@ means your project will look like this app settings file
     "constring": "Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;initial catalog=resortdb;Integrated Security=true;Encrypt=true;TrustServerCertificate=true;"
   }
 }
+
+add this also by putting ,
+
+
+  "JWT": {
+    "ValidAudience": "https://localhost:7230",
+    "ValidIssuer": "https://localhost:7230",
+    "Secret": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyrssjkdajad122"
+  }
+
+so finally it will look like this 
+
+ {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "constring": "Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;initial catalog=resortdb;Integrated Security=true;Encrypt=true;TrustServerCertificate=true;"
+  },
+
+  "JWT": {
+    "ValidAudience": "https://localhost:7198",
+    "ValidIssuer": "https://localhost:7198",
+    "Secret": "JWTAuthenticationHIGHsecuredPasswordVVVp1OH7Xzyrssjkdajad122"
+  }
+}
+give your url of web api here issuer and audience is same becasue we have not yet develped the front end 
+
+
