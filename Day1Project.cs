@@ -62,4 +62,11 @@ so finally it will look like this
 }
 give your url of web api here issuer and audience is same becasue we have not yet develped the front end 
 
+step 4 : 
+--------
+ Now go to Models folder and what and all classes are given in project add those in Models fodler except AppDbContext class which has be added in Data 
+ fodler 
+ 
 
+
+  
