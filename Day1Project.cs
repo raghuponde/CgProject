@@ -67,6 +67,121 @@ step 4 :
  add  Models folder and what and all classes are given in project add those in Models fodler except AppDbContext class which has be added in Data 
  fodler 
  
+so as per the project i had added the following classes 
+
+using System.ComponentModel.DataAnnotations;
+
+namespace ResortAPI.Models
+{
+    public class User
+    {
+
+        [Key]
+        public long? UserId { get; set; }//n
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+
+        public string? Username { get; set; }
+
+        public string? MobileNumber { get; set; }
+
+        public string? UserRole { get; set; }
+    }
+}
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ResortAPI.Models
+{
+    public class Review
+    {
+        [Key]
+        public int ReviewId { get; set; }
+
+        public long UserId { get; set; }
+        public string Subject { get; set; }
+
+        public string Body { get; set; }
+
+        [Range(1, 5)]
+        public int Rating { get; set; }
+
+        public DateTime DateCreated { get; set; }
+        //   [JsonIgnore]
+        [ForeignKey(nameof(UserId))]
+        public virtual User? User { get; set; }
+    }
+}
+
+using System.ComponentModel.DataAnnotations;
+
+namespace ResortAPI.Models
+{
+    public class Resort
+    {
+        [Key]
+        public long ResortId { get; set; }
+
+        public string ResortName { get; set; }
+
+        public string ResortImageUrl { get; set; }
+
+        public string ResortLocation { get; set; }
+
+        public string ResortAvailableStatus { get; set; }
+
+        public long Price { get; set; }
+
+        public int Capacity { get; set; }
+
+        public string Description { get; set; }
+        // [JsonIgnore]
+        public virtual ICollection<Booking>? Bookings { get; set; }
+    }
+}
+
+
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ResortAPI.Models
+{
+    public class Booking
+    {
+        [Key]
+        public long? BookingId { get; set; }
+
+        public int NoOfPersons { get; set; }
+
+        public DateTime FromDate { get; set; }
+
+        public DateTime ToDate { get; set; }
+
+        public string Status { get; set; }
+
+        public double TotalPrice { get; set; }
+
+        public string Address { get; set; }
+
+        // Foreign key for the Many-to-One relationship with User
+        public long? UserId { get; set; } // Nullable foreign key
+                                          // [JsonIgnore]
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User? User { get; set; } // Nullable navigation property
+                                                // [JsonIgnore]
+
+        public long? ResortId { get; set; } // Nullable foreign key
+                                            // [JsonIgnore]
+        [ForeignKey(nameof(ResortId))]
+        public virtual Resort? Resort { get; set; } // Nullable navigation property
+    }
+}
+
+
 
 
   
