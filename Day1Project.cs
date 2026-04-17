@@ -240,4 +240,154 @@ no need to configure json etc will do later now i want your tables in project an
 step 7: add migration and update database 
 
 
+Now what they are asking is you have to do the above task using db first apprach of entity framework so here they will give u script file means sql server tables they will give you 
+that .sql script file you have to run in your local database of sql server and then in web api you have to write one command to do reverse engineering of those tables 
+Now another question is that the script file which is given to you whether it will contain identity tables or not mostly identity tables wont be there we have to generate it from our end 
 
+
+step 1 : create and open asp.net core web api project and give some name like ResortAPI2
+
+step 2: Add the following packages in the project of version all 8.0.24
+
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.AspNetCore.Identity.EntityFrameworkCore  
+Microsoft.AspNetCore.Authentication.JwtBearer     
+
+Go to sql server create new  database resortdb2 and add one sample table create table hello (id int primary key ) and i am doing this just to check 
+
+so add these packages again 
+
+--->then in package manager console fire this command 
+
+I think u have to create folder here for Models before firing this command as web api project will not have Models folder into it as in built 
+
+Scaffold-DbContext 'Data Source=LAPTOP-4G8BHPK9\SQLEXPRESS;initial catalog=resortdb2;Integrated Security=true;TrustServerCertificate=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context ApplicationDbContext -Force
+
+see now i had not brought the line down okay sigle line u have to paste and then only hello table and ApplicationDbContext will be created 
+
+
+change above as per your server and as per your db okay 
+
+so in models all classes will be generated 
+
+Next Identity tables are needed along with the Hello table so 
+
+my class was looking liek this 
+
+ using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+
+namespace ResortAPI2.Models;
+
+public partial class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext()
+    {
+    }
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Hello> Hellos { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer
+        ("Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;initial catalog=resortdb2;Integrated Security=true;TrustServerCertificate=True;");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Hello>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__hello__3213E83F635C32FC");
+
+            entity.ToTable("hello");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+        });
+
+
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
+
+
+and then do like this as this class is partial class so u cannot use do like this overide this code in this file 
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using ResortAPI2.Models;
+
+public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
+    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        SeedRoles(modelBuilder);
+    }
+
+    private static void SeedRoles(ModelBuilder builder)
+    {
+        builder.Entity<IdentityRole>().HasData(
+            new IdentityRole
+            {
+                Id = "1",
+                Name = "Admin",
+                NormalizedName = "ADMIN",
+                ConcurrencyStamp = "1"
+            },
+            new IdentityRole
+            {
+                Id = "2",
+                Name = "Customer",
+                NormalizedName = "CUSTOMER",
+                ConcurrencyStamp = "2"
+            }
+        );
+    }
+}
+
+and also app setting set it 
+
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;Initial Catalog=resortdb2;Integrated Security=True;TrustServerCertificate=True;"
+  }
+}
+
+
+and in program.cs also set it 
+
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+and finally run the migrations it will work so this is the apprach for DBFirst approach okay ..
+
+ 
