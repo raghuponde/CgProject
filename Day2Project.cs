@@ -21,3 +21,17 @@ namespace ResortAPI.Models
 }
 
 go to day 60 and add thises things in project 
+namespace ResortAPI.Models
+{
+    public class Response
+    {
+        public string? Status { get; set; }
+        public string? Message { get; set; }
+    }
+}
+
+
+Now add one folder with the name Services and add one Interface with name IAuth 
+
+and add these methods into it 
+
