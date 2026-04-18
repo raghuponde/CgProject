@@ -1,4 +1,5 @@
-
+go to day 58 
+  and add this things 
 go to project in Models folder add this class 
 
   using System.ComponentModel.DataAnnotations;
@@ -19,4 +20,4 @@ namespace ResortAPI.Models
     }
 }
 
-
+go to day 60 and add thises things in project 
