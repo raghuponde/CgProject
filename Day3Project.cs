@@ -86,3 +86,17 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     }
 }
 
+Step 6:
+---------
+	{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;Initial Catalog=EmpModified;Integrated Security=True;TrustServerCertificate=True;"
+  }
+}
