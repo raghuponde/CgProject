@@ -28,4 +28,8 @@ CREATE TABLE [dbo].[employees](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
+step 4 : 
+--------
+	Scaffold-DbContext 'Data Source=LAPTOP-4G8BHPK9\SQLEXPRESS;initial catalog=resortdb2;Integrated Security=true;TrustServerCertificate=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context ApplicationDbContext -Force
+
 
