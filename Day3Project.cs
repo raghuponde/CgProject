@@ -1327,7 +1327,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+           
 
             app.UseAuthorization();
 
@@ -1339,7 +1339,11 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
     }
 }
 
-so Now my web api is ready let us see how it is working 
+so Now my web api is ready let us see how it is working so i was getting some 500 error of authentication so i remove from EmpController [Authorize] as still i had not implemented this okay 
+
+so after this my web api is running fine .
+
+	
 
 
 
