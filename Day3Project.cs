@@ -12,15 +12,7 @@ Microsoft.AspNetCore.Authentication.JwtBearer
 step 3:IN the project which u created earlier check the db in sql server there and take out script file from sql sever of your database once 
 
 
-USE [EmpModified]
-GO
-
-/****** Object:  Table [dbo].[employees]    Script Date: 27-04-2026 14:32:22 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
+create database EmpModified 
 
 CREATE TABLE [dbo].[employees](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -35,4 +27,5 @@ CREATE TABLE [dbo].[employees](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+
 
