@@ -100,3 +100,5 @@ Step 6:
     "DefaultConnection": "Data Source=LAPTOP-4G8BHPK9\\SQLEXPRESS;Initial Catalog=EmpModified;Integrated Security=True;TrustServerCertificate=True;"
   }
 }
+Finally run the migrations and this is DBFirst appraoch 
+
