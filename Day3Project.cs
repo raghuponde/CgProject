@@ -9,4 +9,6 @@ Microsoft.EntityFrameworkCore.Tools
 Microsoft.AspNetCore.Identity.EntityFrameworkCore  
 Microsoft.AspNetCore.Authentication.JwtBearer   
 
-step 3:
+step 3:IN the project which u created earlier check the db in sql server there and take out script file from sql sever of your database once 
+
+
