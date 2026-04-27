@@ -1343,6 +1343,26 @@ so Now my web api is ready let us see how it is working so i was getting some 50
 
 so after this my web api is running fine .
 
+now they will ask you this have u implemented automapper as you are doing DTO to partial class transfer yes i had implemened and written my own automapper for this program which is this 
+just tell this code is acting as automapping work and there is package of automapper which u can install and use that instead of this below function but tell that this my own automapper i am using it 
+
+	
+  private EmployeeDto MapEmployeeToDto(Employee employee)
+        {
+            string baseUrl = GetBaseUrl();
+
+            return new EmployeeDto
+            {
+                Id = employee.Id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Email = employee.Email,
+                Age = employee.Age,
+                ImagePath = string.IsNullOrEmpty(employee.ImagePath)
+                    ? $"{baseUrl}/uploads/default.jpg"
+                    : $"{baseUrl}{employee.ImagePath}"
+            };
+        }
 	
 
 
